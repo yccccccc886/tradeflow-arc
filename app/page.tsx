@@ -4,6 +4,7 @@ import { FormEvent, useEffect, useMemo, useState } from "react";
 
 declare global {
   interface Window {
+    __TRADEFLOW_ESCROW__?: string;
     ethereum?: {
       request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
     };
@@ -26,7 +27,7 @@ type Trade = {
 
 const ARC_CHAIN_ID = "0x4ce392"; // 5042002
 const ARC_EXPLORER = "https://testnet.arcscan.app";
-const ESCROW_ADDRESS = process.env.NEXT_PUBLIC_ESCROW_ADDRESS ?? "";
+const ESCROW_ADDRESS = typeof window !== "undefined" ? window.__TRADEFLOW_ESCROW__ ?? "" : "";
 
 const initialTrades: Trade[] = [
   {
